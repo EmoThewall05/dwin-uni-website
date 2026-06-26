@@ -20,6 +20,7 @@ export interface Project {
     layer: string;
     details: string;
   }[];
+  completionPercentage: number;
 }
 
 export const PROJECTS_DATA: Project[] = [
@@ -32,7 +33,7 @@ export const PROJECTS_DATA: Project[] = [
     longDescription: "Emobies is a comprehensive service platform designed for seamless repair complaints management, live technician chat, real-time delivery tracking, and loyalty rewards. Built entirely on a phone using Termux + Acode, with robust backend nodes and intelligent Gemini-powered troubleshooting.",
     category: "Creative",
     tags: ["Mobile Repair", "Live Support", "Delivery Tracking", "EmoCoins"],
-    image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1591337676887-a210a696a985?auto=format&fit=crop&w=800&q=80",
     features: [
       "Repair Complaints: Submit, track, and manage complex repair lifecycles",
       "Live Support Chat: Direct real-time chat with assigned service technicians",
@@ -55,7 +56,8 @@ export const PROJECTS_DATA: Project[] = [
       { layer: "Presentation Hub", details: "Flutter mobile application styled with Cupertino and Material adaptive widgets" },
       { layer: "Backend Nodes", details: "Node.js Express server hosted on Railway with MongoDB persistent state engines" },
       { layer: "AI Guardian Nodes", details: "Serverless Google Gemini API integration for real-time automated diagnostic feedback" }
-    ]
+    ],
+    completionPercentage: 95
   },
   {
     id: "ddott-live",
@@ -66,7 +68,7 @@ export const PROJECTS_DATA: Project[] = [
     longDescription: "Ddott.live is a premium media streaming platform designed for interactive live content, creator engagement, and low-latency broadcasting, seamlessly integrated with the Dwin Universe.",
     category: "Media",
     tags: ["Live Streaming", "Media", "Interactive"],
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?auto=format&fit=crop&w=800&q=80",
     features: ["Ultra-low latency live streaming", "Interactive creator tools", "Real-time viewer engagement"],
     stats: [{ label: "Concurrent Viewers", value: "1k+" }],
     accentColor: "from-rose-500 to-red-500",
@@ -74,24 +76,27 @@ export const PROJECTS_DATA: Project[] = [
     techStack: ["React", "WebRTC", "Socket.io"],
     connectedProjects: ["ddott-tv"],
     releaseVersion: "v1.0.0",
-    architecture: [{ layer: "Streaming Hub", details: "Low-latency WebRTC broadcast pipeline" }]
+    architecture: [{ layer: "Streaming Hub", details: "Low-latency WebRTC broadcast pipeline" }],
+    completionPercentage: 80
   },
   {
     id: "emowall-ai",
     name: "Emowall Ai 2.0",
     url: "https://web.emothewall.online",
     edgeWorkerUrl: "https://dwin-emothewall-ai.meradivin.workers.dev",
-    tagline: "Next-Gen Intelligent Artwork & Infinite Nebula Canvas",
-    description: "Generates high-fidelity emotional wallpapers and custom fluid neon art powered by sophisticated style-transfer neural networks.",
-    longDescription: "Emowall Ai 2.0 transforms text, emotion vectors, and sound frequencies into bespoke, eye-safe high-resolution wallpaper sets. Featuring real-time high-fidelity rendering, 4K resolution exports, and an interactive voting system that feeds into collaborative community trends.",
+    tagline: "Your Family's Silent Guardian (Built from Dubai 🇦🇪 · Made for Kerala 🌿 · Free for Every Child 💚)",
+    description: "Emowall AI 2.0 is the world's first multi-generational silent AI safety platform — built entirely on a phone using Termux + Acode, from Dubai, for Kerala's children.",
+    longDescription: "Emowall AI 2.0 is the world's first multi-generational silent AI safety platform — built entirely on a phone 📱 using Termux + Acode, from Dubai, for Kerala's children. While other safety apps wait for a button press, Emowall acts before the child even realizes danger.",
     category: "AI",
-    tags: ["Generative AI", "Wallpapers", "Style Transfer", "4K Art"],
-    image: "/src/assets/images/emowall_ai_1782305659946.jpg",
+    tags: ["Child Safety", "Silent SOS", "AI Guardian", "Kerala"],
+    image: "https://raw.githubusercontent.com/EmoThewall05/Emowall-AI-2.0/refs/heads/main/assets/emowall_ai_banner.jpg",
     features: [
-      "State-of-the-art neural style transfer matching targeted mood profiles",
-      "Super-resolution 4K and 8K upscale engines running on server clusters",
-      "Adaptive aspect ratio cropping for mobile, tablet, and widescreen setups",
-      "Dynamic live-wallpaper particles and interactive fluid effects"
+      "Silent Threat Detection: Sound, Smart Watch, and Phone Sensor Monitoring",
+      "Multi-Layered Verification Chain: Parent, Relative, School, and Auto SOS",
+      "Ten Protection Modes: Including Guardian, Shield, Care, and Digital Amma",
+      "Butterfly Guardian: Emotional Wellness & Safe Space AI",
+      "Animal Alert: Real-time AI Wildlife & Danger Identification",
+      "Universal Watch Support: Integration with WearOS, Fitbit, Garmin, and more"
     ],
     stats: [
       { label: "Wallpapers Created", value: "1.6M+" },
@@ -107,7 +112,8 @@ export const PROJECTS_DATA: Project[] = [
       { layer: "AI Diffusion Layer", details: "Custom serverless stable-style weights pipeline triggered via secure API gateways" },
       { layer: "Upscaler Engine", details: "Real-time bilinear refinement running on WebGL custom shaders for preview" },
       { layer: "Gallery Sync", details: "Fast global CDN caching for instant image distribution and upvote synchronization" }
-    ]
+    ],
+    completionPercentage: 90
   },
   {
     id: "emo-ai-pro",
@@ -118,7 +124,7 @@ export const PROJECTS_DATA: Project[] = [
     longDescription: "Emo Ai pro is an enterprise-grade API suite and dashboard designed to interpret the underlying nuances of natural language inputs. Perfect for customer support enhancement, voice-responsive applications, and mental wellness tracking tools.",
     category: "AI",
     tags: ["Cognitive AI", "NLP", "Sentiment Analytics", "Enterprise API"],
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80",
     features: [
       "Micro-expression sentiment analysis with multi-dimensional valence graphing",
       "SDK libraries supporting easy JavaScript, Python, and Rust imports",
@@ -139,7 +145,8 @@ export const PROJECTS_DATA: Project[] = [
       { layer: "Inference Model", details: "Quantized BERT Transformer deployed on edge-optimized GPU endpoints" },
       { layer: "API Gateway", details: "Rate-limiting Express proxy utilizing Redis cached sentiment vectors" },
       { layer: "Frontend Dashboard", details: "Recharts vector canvas rendering real-time sentiment stream fluctuations" }
-    ]
+    ],
+    completionPercentage: 85
   },
   {
     id: "thewall-web3",
@@ -151,7 +158,7 @@ export const PROJECTS_DATA: Project[] = [
     longDescription: "Thewall web3 empowers communities to secure, trade, and paint on a shared global canvas. Every block is an immutable asset that can be leased, updated, or tokenized, creating an ever-evolving digital monument of internet culture.",
     category: "Web3",
     tags: ["Blockchain", "dApp", "NFT Canvas", "Decentralized Grid"],
-    image: "/src/assets/images/thewall_web3_1782305674493.jpg",
+    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80",
     features: [
       "Smart contract-governed grid coordinates with near-zero gas parameters",
       "Multi-chain compatibility including Ethereum, Polygon, and Solana",
@@ -172,7 +179,8 @@ export const PROJECTS_DATA: Project[] = [
       { layer: "Web3 Providers", details: "Direct JSON-RPC interface connecting browser wallets to deployed EVM contracts" },
       { layer: "Off-Chain Cache", details: "Subspace subgraph indexing pixel color updates for instant, real-time load times" },
       { layer: "Storage Nodes", details: "Metadata and historic canvas states backed up securely on Filecoin and IPFS" }
-    ]
+    ],
+    completionPercentage: 70
   },
   {
     id: "ddott-tv",
@@ -183,7 +191,7 @@ export const PROJECTS_DATA: Project[] = [
     longDescription: "Ddott.tv merges state-of-the-art interactive live video pipelines with modern creator customization tools. Designed to support real-time user-engagement plugins, chat-governed overlays, and smooth avatar capture integrations.",
     category: "Media",
     tags: ["Live Streaming", "Creator Economy", "Interactive Video", "WebRTC"],
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80",
     features: [
       "Real-time sub-second WebRTC streaming protocols with auto-adjusting bitrates",
       "Interactive browser-rendered overlay systems triggered via viewer triggers",
@@ -204,7 +212,8 @@ export const PROJECTS_DATA: Project[] = [
       { layer: "Ingest Nodes", details: "RTMP and WebRTC media servers utilizing dynamic transcoding layers" },
       { layer: "Signaling Server", details: "Socket clusters managing sub-second feedback state machines" },
       { layer: "Player Canvas", details: "React player wrapper featuring custom custom-video render filters" }
-    ]
+    ],
+    completionPercentage: 75
   },
   {
     id: "emo-key",
@@ -215,7 +224,7 @@ export const PROJECTS_DATA: Project[] = [
     longDescription: "Emo key is an industry-grade personal security tool, combining browser extension capabilities, physical authentication token guidelines, and cryptographic passwordless multi-factor security frameworks.",
     category: "Security",
     tags: ["Cryptography", "MFA", "Privacy", "WebAuthn"],
-    image: "/src/assets/images/emo_key_1782305692032.jpg",
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
     features: [
       "WebAuthn passkey registration supporting hardware biometric scanners",
       "Advanced private key segmentation protecting against client-side memory scraping",
@@ -236,7 +245,8 @@ export const PROJECTS_DATA: Project[] = [
       { layer: "Cryptography", details: "Elliptic curve cryptography (Ed25519) compiled into highly secure WebAssembly binaries" },
       { layer: "Extension Link", details: "Isolated client-runtime background scripts utilizing state-of-the-art WebAuthn" },
       { layer: "Vault Store", details: "Local double-encrypted hardware-backed Sandbox container storage" }
-    ]
+    ],
+    completionPercentage: 88
   },
   {
     id: "dwinstudio",
@@ -248,7 +258,7 @@ export const PROJECTS_DATA: Project[] = [
     longDescription: "Dwinstudio v4 is an advanced drag-and-drop code compiler and editor workspace. Built to streamline full-stack web development pipelines, visual design prototyping, and high-fidelity modular layout compiling.",
     category: "Creative",
     tags: ["Visual IDE", "Prototyping", "Builder Workspace", "TypeScript"],
-    image: "https://images.unsplash.com/photo-1618005198143-d3663bfe92a1?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1550439062-609e1531270e?auto=format&fit=crop&w=800&q=80",
     features: [
       "Real-time reactive canvas rendering changes live inside an isolated sandbox",
       "Instant modular component generation and automated TypeScript compiler",
@@ -269,7 +279,8 @@ export const PROJECTS_DATA: Project[] = [
       { layer: "Sandboxed Editor", details: "Monaco Editor canvas wrapped in highly secure, isolated sandboxed iframe structures" },
       { layer: "Compiler", details: "Browser-side ESBuild bundle transpilation resolving dependency tree dynamically" },
       { layer: "Deployment Hub", details: "Secure REST pipeline uploading compiled builds straight into production edge servers" }
-    ]
+    ],
+    completionPercentage: 92
   }
 ];
 

@@ -10,10 +10,11 @@ import {
   Coins, Play, Send, Zap, Eye, EyeOff, Hexagon, ChevronRight, Activity, Grid, 
   ExternalLink, Layers, Monitor, Phone, Info, Clock, AlertTriangle, CheckCircle, Trash2,
   Wrench, Truck, User, MapPin, MessageSquare, Cpu, Lock, Unlock, Settings, Check, AlertCircle,
-  Gauge, Sliders, Database, Camera, Facebook, Instagram, Linkedin, Twitter, BrainCircuit
+  Gauge, Sliders, Database, Camera, Facebook, Instagram, Linkedin, Twitter
 } from "lucide-react";
 import { PROJECTS_DATA, Project, ContactMessage } from "./types";
 import { ProjectAssistant } from "./components/ProjectAssistant";
+import { LazyImage } from "./components/LazyImage";
 import { QrReader } from "react-qr-reader";
 
 export default function App() {
@@ -1484,16 +1485,19 @@ export default function App() {
                     <div>
                       {/* Image Preview with overlay gradient */}
                       <div className="h-40 w-full relative overflow-hidden bg-zinc-900">
-                        <img 
-                          src={project.image} 
-                          alt={project.name} 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          onError={(e) => {
-                            // Fallback image if paths are offline
-                            e.currentTarget.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80";
-                          }}
-                        />
+                        {project.id === "ddott-live" ? (
+                          <div className="w-full h-full flex items-center justify-center text-zinc-400 font-display text-2xl font-bold bg-zinc-950">
+                            Ddott.tv
+                          </div>
+                        ) : (
+                          <LazyImage
+                            src={project.image}
+                            alt={project.name}
+                            className="w-full h-full transition-transform duration-500 group-hover:scale-105"
+                          />
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent"></div>
+                      </div>
                         <span className={`absolute top-3 right-3 text-[10px] px-2 py-0.5 rounded-full font-mono border ${
                           project.badge.includes("Live") || project.badge.includes("Flagship")
                             ? "bg-emerald-950/60 border-emerald-500/50 text-emerald-400"
@@ -1512,9 +1516,20 @@ export default function App() {
                         <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed">
                           {project.description}
                         </p>
+                        {/* Project Health Progress Bar */}
+                        <div className="pt-2">
+                          <div className="flex justify-between items-center text-[10px] font-mono text-zinc-500 mb-1">
+                            <span>Health</span>
+                            <span>{project.completionPercentage}%</span>
+                          </div>
+                          <div className="h-1.5 w-full bg-zinc-900 rounded-full overflow-hidden">
+                            <div 
+                              className="h-full bg-cyan-500 rounded-full transition-all duration-500"
+                              style={{ width: `${project.completionPercentage}%` }}
+                            />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-
                     <div className="px-5 pb-5 pt-2 flex items-center justify-between border-t border-zinc-900 bg-zinc-950/40">
                       <div className="flex gap-1.5">
                         {project.tags.slice(0, 2).map((t, idx) => (
@@ -1604,13 +1619,10 @@ export default function App() {
               {/* Left Column: Big Showcase Image & Fast Stats */}
               <div className="lg:col-span-5 space-y-6">
                 <div className="relative rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-800 shadow-2xl group">
-                  <img 
+                  <LazyImage 
                     src={selectedProject.image} 
                     alt={selectedProject.name} 
-                    className="w-full h-[320px] object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80";
-                    }}
+                    className="w-full h-[320px] opacity-90 transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent"></div>
                   
@@ -2571,10 +2583,10 @@ export default function App() {
                 {selectedProject.id === "emo-key" && (
                   <div className="bg-zinc-950 rounded-2xl border border-zinc-900 p-6 space-y-6 animate-fadeIn">
                     <div className="h-44 w-full relative rounded-xl overflow-hidden bg-zinc-900 border border-zinc-800">
-                      <img 
-                        src={selectedProject.image} 
-                        alt={selectedProject.name} 
-                        className="w-full h-full object-cover opacity-80"
+                      <LazyImage
+                        src={selectedProject.image}
+                        alt={selectedProject.name}
+                        className="w-full h-full opacity-80"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent"></div>
                       <div className="absolute bottom-4 left-4">
@@ -4253,9 +4265,14 @@ export default function App() {
               {/* Right Wing Nodes */}
               <div className="space-y-4 flex flex-col items-center md:items-start">
                 <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-center md:text-left w-full max-w-[240px] hover:border-violet-500 transition-colors">
-                  <span className="text-[9px] font-mono text-violet-400 block">CREATIVE AI ART</span>
+                  <LazyImage
+                    src="https://raw.githubusercontent.com/EmoThewall05/Emowall-AI-2.0/refs/heads/main/assets/emowall_ai_banner.jpg"
+                    alt="Emowall AI Banner"
+                    className="w-full h-24 rounded-lg mb-2"
+                  />
+                  <span className="text-[9px] font-mono text-violet-400 block">AI POWERED</span>
                   <h4 className="font-bold text-zinc-200">Emowall Ai 2.0</h4>
-                  <p className="text-[10px] text-zinc-500 leading-tight">Generates responsive live visual wallpapers</p>
+                  <p className="text-[10px] text-zinc-500 leading-tight">Silent multi-generational AI child safety platform</p>
                 </div>
                 <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800 text-center md:text-left w-full max-w-[240px] hover:border-pink-500 transition-colors">
                   <span className="text-[9px] font-mono text-pink-400 block">DEVELOPER WORKSPACE</span>
