@@ -1,0 +1,6 @@
+{
+  "name": "E-Mobies Projects Hub",
+  "description": "A modern, responsive, and dark-themed portfolio showcasing the E-Mobies ecosystem of projects: Emobies, Emowall Ai 2.0, Emo Ai pro, Thewall web3, Ddott.tv, Emo key, and Dwinstudio v4.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
