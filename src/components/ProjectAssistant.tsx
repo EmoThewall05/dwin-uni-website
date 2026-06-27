@@ -52,10 +52,22 @@ export const ProjectAssistant: React.FC<ProjectAssistantProps> = ({ project, all
       }
     } else {
       // Default welcome message
+      const introMessage = activeProject.id === "emo-key" 
+        ? `Welcome to the **Emo key** dashboard! I am your dedicated AI Assistant for the **Emo key Engine**. 
+
+I can guide you through the active simulator and explain our core system features:
+- **WebAuthn Passkey Registration:** Supporting hardware biometric scanners.
+- **Advanced Private Key Segmentation:** Protecting against client-side memory scraping.
+- **Zero-knowledge Proof (ZKP) Identity Synchronization:** Securely syncing identities across devices.
+- **Encrypted Cloud Backups:** Utilizing distributed IPFS encrypted nodes.
+
+Would you like to initiate a simulated **WebAuthn Registration** flow, or shall we inspect how the **Rust WASM compiler** segments the private key?`
+        : `Hello! I am your dedicated AI Assistant for **${activeProject.name}**. I can explain its architecture, tech stack, connected nodes, or guide you through the active simulator. Ask me anything about this system!`;
+
       setMessages([
         {
           role: "model",
-          text: `Hello! I am your dedicated AI Assistant for **${activeProject.name}**. I can explain its architecture, tech stack, connected nodes, or guide you through the active simulator. Ask me anything about this system!`,
+          text: introMessage,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         }
       ]);

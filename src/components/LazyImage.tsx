@@ -4,9 +4,10 @@ interface LazyImageProps {
   src: string;
   alt: string;
   className?: string;
+  fallbackSrc?: string;
 }
 
-export const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className = "" }) => {
+export const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className = "", fallbackSrc }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [inView, setInView] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -45,7 +46,7 @@ export const LazyImage: React.FC<LazyImageProps> = ({ src, alt, className = "" }
         onLoad={() => setIsLoaded(true)}
         className={`w-full h-full object-cover transition-opacity duration-700 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
         onError={(e) => {
-          e.currentTarget.src = "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80";
+          e.currentTarget.src = fallbackSrc || "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80";
         }}
       />
     </div>

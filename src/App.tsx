@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect, useRef, FormEvent } from "react";
+import { motion } from "motion/react";
 import { 
   Tv, Wallet, Sparkles, BrainCircuit, Gamepad2, Key, Code2, 
   Terminal, ShieldCheck, Fingerprint, Globe, Mail, ArrowUpRight, 
@@ -12,9 +13,11 @@ import {
   Wrench, Truck, User, MapPin, MessageSquare, Cpu, Lock, Unlock, Settings, Check, AlertCircle,
   Gauge, Sliders, Database, Camera, Facebook, Instagram, Linkedin, Twitter
 } from "lucide-react";
-import { PROJECTS_DATA, Project, ContactMessage } from "./types";
+import { PROJECTS_DATA, Project, ContactMessage, ButterflyState } from "./types";
 import { ProjectAssistant } from "./components/ProjectAssistant";
 import { LazyImage } from "./components/LazyImage";
+import { EmowallDetails } from "./components/EmowallDetails";
+import { EmoAiProDetails } from "./components/EmoAiProDetails";
 import { QrReader } from "react-qr-reader";
 
 export default function App() {
@@ -81,17 +84,8 @@ export default function App() {
   const [freezePinInput, setFreezePinInput] = useState<string>("");
   const [freezeLogs, setFreezeLogs] = useState<string[]>([]);
 
-  // Emowall AI 2.0 Generator State
-  const [aiPrompt, setAiPrompt] = useState<string>("");
-  const [aiMode, setAiMode] = useState<string>("Synth");
-  const [generatingAi, setGeneratingAi] = useState<boolean>(false);
-  const [generatedArtwork, setGeneratedArtwork] = useState<any>({
-    cssGradient: "linear-gradient(135deg, #4c1d95 0%, #0c0a09 50%, #06b6d4 100%)",
-    philosophy: "In the depth of the cosmic network, your imagination shines like a lone nebula.",
-    particlesColor: "#06b6d4",
-    density: 80,
-    styleAnalysis: "A rich ambient deep indigo and cyan vector mesh, optimized for low-fatigue high-contrast dark environments."
-  });
+  // Emo AI Pro Butterfly State
+  const [butterflyState, setButterflyState] = useState<ButterflyState>('hover');
 
   // Emo AI Pro Analyzer State
   const [analyzeText, setAnalyzeText] = useState<string>("");
@@ -146,9 +140,6 @@ export default function App() {
     { village: "Wayanad, Kerala 🌿", capacity: "85 screens", status: "Active • Spot synced", synced: true },
     { village: "Al Karama, Dubai 🇦🇪", capacity: "50 screens", status: "Active • Spot synced", synced: true }
   ]);
-
-  // Emo AI Pro Extended State
-  const [butterflyState, setButterflyState] = useState<"Calm" | "Curious" | "Concerned" | "Protective" | "Resting">("Calm");
 
   // Emobies Mobile Fix State
   const [emobiesSubTab, setEmobiesSubTab] = useState<"complaints" | "chat" | "delivery" | "assistant" | "admin">("complaints");
@@ -1143,32 +1134,6 @@ export default function App() {
     setTimeout(() => {
       setStreamAlert(null);
     }, 4000);
-  };
-
-  // Call server-side Emowall AI 2.0 wallpaper generation API
-  const handleGenerateAiWallpaper = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!aiPrompt.trim()) return;
-
-    setGeneratingAi(true);
-    try {
-      const response = await fetch("/api/emowall-ai", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: aiPrompt, mode: aiMode })
-      });
-      const resData = await response.json();
-      if (resData.success && resData.data) {
-        setGeneratedArtwork(resData.data);
-      } else if (resData.data) {
-        // Fallback works
-        setGeneratedArtwork(resData.data);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setGeneratingAi(false);
-    }
   };
 
   // Call server-side Emo AI Pro sentiment analyzer API
@@ -2398,93 +2363,14 @@ export default function App() {
                   </div>
                 )}
 
-                {/* C. Emowall AI 2.0 Wallpaper Generator */}
-                {selectedProject.id === "emowall-ai" && (
-                  <div className="bg-zinc-950 rounded-2xl border border-zinc-900 overflow-hidden shadow-2xl p-6 space-y-6">
-                    
-                    {/* Real Gemini generation Form */}
-                    <form onSubmit={handleGenerateAiWallpaper} className="space-y-4">
-                      <div className="flex justify-between items-center">
-                        <h4 className="text-xs font-mono text-zinc-400 uppercase tracking-widest">Generate Aesthetic Wallpaper</h4>
-                        <span className="text-[10px] text-zinc-500 font-mono">Gemini 3.5-Flash</span>
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <label className="text-xs text-zinc-300 font-mono">Enter a visual art concept prompt:</label>
-                        <input
-                          type="text"
-                          value={aiPrompt}
-                          onChange={(e) => setAiPrompt(e.target.value)}
-                          placeholder="e.g. Neon butterfly hovering over digital monolith in matrix void"
-                          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-zinc-200 focus:outline-none focus:border-cyan-500 transition-colors"
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                          <label className="text-[10px] text-zinc-400 font-mono">Art Theme Preset:</label>
-                          <select
-                            value={aiMode}
-                            onChange={(e) => setAiMode(e.target.value)}
-                            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-1.5 text-xs text-zinc-300 focus:outline-none"
-                          >
-                            {["Cyber", "Dream", "Retro", "Bio", "Void", "Aura", "Synth", "Quantum"].map((mode) => (
-                              <option key={mode} value={mode}>{mode}</option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <div className="flex items-end">
-                          <button
-                            type="submit"
-                            disabled={generatingAi}
-                            className="w-full bg-cyan-500 hover:bg-cyan-600 disabled:bg-zinc-800 disabled:text-zinc-500 text-black font-extrabold text-xs py-2 rounded-lg transition-colors flex items-center justify-center gap-1"
-                          >
-                            <Sparkles className="w-3.5 h-3.5" />
-                            <span>{generatingAi ? "ANALYZING STYLE..." : "GENERATE ART"}</span>
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-
-                    {/* Result Output Preview Display */}
-                    <div 
-                      style={{ background: generatedArtwork.cssGradient }} 
-                      className="h-44 rounded-2xl relative overflow-hidden transition-all duration-700 flex flex-col justify-end p-4 border border-zinc-800 shadow-inner group"
-                    >
-                      {/* Interactive glowing overlay */}
-                      <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] group-hover:bg-black/40 transition-colors duration-500"></div>
-                      
-                      {/* Neon Particles effect simulator */}
-                      <div className="absolute inset-0 pointer-events-none opacity-40">
-                        <div className="absolute w-2 h-2 rounded-full animate-ping top-8 left-12" style={{ backgroundColor: generatedArtwork.particlesColor }}></div>
-                        <div className="absolute w-1.5 h-1.5 rounded-full animate-ping top-16 right-20" style={{ backgroundColor: generatedArtwork.particlesColor }}></div>
-                        <div className="absolute w-3 h-3 rounded-full animate-ping bottom-6 left-1/3" style={{ backgroundColor: generatedArtwork.particlesColor }}></div>
-                      </div>
-
-                      {/* Display Info */}
-                      <div className="relative z-10 space-y-1 max-w-lg">
-                        <p className="text-zinc-200 text-xs font-mono italic leading-relaxed">
-                          "{generatedArtwork.philosophy}"
-                        </p>
-                        <div className="flex items-center gap-2 pt-1">
-                          <span className="text-[9px] font-mono bg-black/80 text-cyan-400 px-1.5 py-0.5 rounded border border-cyan-500/20">
-                            Wallpaper Style Analysis Active
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <p className="text-[11px] text-zinc-500 font-mono bg-zinc-900 p-2.5 rounded-lg leading-relaxed border border-zinc-900">
-                      <strong>AI style description:</strong> {generatedArtwork.styleAnalysis}
-                    </p>
-
-                  </div>
-                )}
+                {/* C. Emowall AI 2.0 Details */}
+                {selectedProject.id === "emowall-ai" && <EmowallDetails />}
 
                 {/* D. Emo AI Pro Sentiment Analyzer Dashboard */}
                 {selectedProject.id === "emo-ai-pro" && (
-                  <div className="bg-zinc-950 rounded-2xl border border-zinc-900 overflow-hidden shadow-2xl p-6 space-y-6">
+                  <div className="space-y-6">
+                    <EmoAiProDetails state={butterflyState} setState={setButterflyState} />
+                    <div className="bg-zinc-950 rounded-2xl border border-zinc-900 overflow-hidden shadow-2xl p-6 space-y-6">
                     
                     <form onSubmit={handleAnalyzeSentiment} className="space-y-4">
                       <div className="flex justify-between items-center">
@@ -2574,6 +2460,7 @@ export default function App() {
                         </div>
                       </div>
 
+                    </div>
                     </div>
 
                   </div>
@@ -3358,7 +3245,15 @@ export default function App() {
                         <div>
                           <span className="text-[9px] font-mono text-zinc-500 uppercase block tracking-wider">EmoCoins Balance</span>
                           <div className="flex items-center gap-2">
-                            <span className="text-base font-black text-amber-400 font-mono">{emobiesCoins} 🪙</span>
+                            <motion.span 
+                              key={emobiesCoins}
+                              initial={{ scale: 1, rotate: 0 }}
+                              animate={{ scale: [1, 1.2, 1], rotate: [0, -5, 5, 0] }}
+                              transition={{ duration: 0.4 }}
+                              className="text-base font-black text-amber-400 font-mono"
+                            >
+                              {emobiesCoins} 🪙
+                            </motion.span>
                             <button 
                               onClick={() => setEmobiesCoins(prev => prev + 10)}
                               className="text-[9px] font-mono bg-amber-500 hover:bg-amber-600 text-black px-1.5 py-0.5 rounded font-bold transition-all"
