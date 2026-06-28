@@ -111,7 +111,7 @@ Would you like to initiate a simulated **WebAuthn Registration** flow, or shall 
 
     try {
       // Map full history to format expected by backend
-      const historyPayload = messages.map(msg => ({
+      const historyPayload = messages?.map(msg => ({
         role: msg.role === "user" ? "user" : "model",
         text: msg.text
       }));
@@ -199,7 +199,7 @@ Would you like to initiate a simulated **WebAuthn Registration** flow, or shall 
               }}
               className="bg-transparent text-xs font-mono font-extrabold text-zinc-100 uppercase focus:outline-none"
             >
-              {allProjects.map(p => (
+              {allProjects?.map(p => (
                 <option key={p.id} value={p.id} className="bg-zinc-950 text-zinc-200">{p.name}</option>
               ))}
             </select>
@@ -234,7 +234,7 @@ Would you like to initiate a simulated **WebAuthn Registration** flow, or shall 
         <div className="p-4 space-y-4 animate-fadeIn">
           {/* Messages container */}
           <div className="h-64 overflow-y-auto pr-1 space-y-3.5 text-xs scrollbar">
-            {messages.map((msg, index) => {
+            {messages?.map((msg, index) => {
               const isModel = msg.role === "model";
               return (
                 <div key={index} className={`flex flex-col max-w-[88%] ${isModel ? "mr-auto" : "ml-auto"}`}>
@@ -275,7 +275,7 @@ Would you like to initiate a simulated **WebAuthn Registration** flow, or shall 
             <div className="space-y-1.5 pt-2 border-t border-zinc-900/50">
               <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest block mb-1 font-bold">Recommended Queries:</span>
               <div className="flex flex-col gap-1">
-                {suggestions.map((sug, idx) => (
+                {suggestions?.map((sug, idx) => (
                   <button
                     key={idx}
                     type="button"

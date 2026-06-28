@@ -29,7 +29,7 @@ async function generateContentWithFallback(params: {
   contents: any;
   config?: any;
 }) {
-  const models = ["gemini-3.5-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
+  const models = ["gemini-2.0-flash", "gemini-2.0-flash-lite"];
   let lastError: any = null;
 
   for (const model of models) {
@@ -237,6 +237,35 @@ User message: ${message}`;
       success: false,
       reply: `[OFFLINE CORE] I received your message: "${message}". Currently my connection to the Gemini cognitive model is simulated, but here's some info: "${projectName}" is powered by ${projectTechStack?.join(', ') || 'cutting-edge Tech Stack'} and implements core features like ${projectFeatures?.[0] || 'smart integrations'}. Let me know if you want to know more!`
     });
+  }
+});
+
+// 4. Gemini Chat Bot Support
+app.post('/api/gemini-chat', async (req, res) => {
+  const { prompt, history } = req.body;
+  if (!prompt) {
+    return res.status(400).json({ error: "Prompt is required" });
+  }
+
+  try {
+    const formattedHistory = (history || []).map((h: any) => ({
+      role: h.role === 'user' ? 'user' : 'model',
+      parts: [{ text: h.text }]
+    }));
+
+    const response = await generateContentWithFallback({
+      contents: [...formattedHistory, { role: "user", parts: [{ text: prompt }] }],
+    });
+
+    const reply = response.text || "I apologize, but I could not compute a response right now. Please try again.";
+    res.json({ success: true, reply });
+  } catch (error: any) {
+    console.error("Gemini Chat failed:", error);
+    if (error.status === 'RESOURCE_EXHAUSTED') {
+      res.status(429).json({ success: false, error: "Rate limit exceeded. Please try again in a minute." });
+    } else {
+      res.status(500).json({ success: false, error: error.message });
+    }
   }
 });
 

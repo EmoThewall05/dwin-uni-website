@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { PROJECTS_DATA, Project, ContactMessage, ButterflyState } from "./types";
 import { ProjectAssistant } from "./components/ProjectAssistant";
+import { EmoKeyChat } from "./components/EmoKeyChat";
+import { EmoKeyGenerator } from "./components/EmoKeyGenerator";
 import { LazyImage } from "./components/LazyImage";
 import { EmowallDetails } from "./components/EmowallDetails";
 import { EmoAiProDetails } from "./components/EmoAiProDetails";
@@ -71,6 +73,7 @@ export default function App() {
   const [swapFrom, setSwapFrom] = useState<string>("SOL");
   const [swapTo, setSwapTo] = useState<string>("EMO");
   const [swapAmount, setSwapAmount] = useState<string>("2");
+  const [isSwapSuccess, setIsSwapSuccess] = useState<boolean>(false);
   const [pixelColor, setPixelColor] = useState<string>("#06b6d4");
   const [pixelGrid, setPixelGrid] = useState<string[]>(() => {
     return Array(256).fill("#18181b");
@@ -1045,6 +1048,9 @@ export default function App() {
       `🔄 SWAP EXECUTED: Swapped ${amount} ${swapFrom} for +${receivedEmo} EMO Coins.`,
       `Tx Hash: 0x${Math.random().toString(16).substring(2, 12)} (Gasless Alchemy Sponsor)`
     ]);
+
+    setIsSwapSuccess(true);
+    setTimeout(() => setIsSwapSuccess(false), 2000);
   };
 
   // Interactive Web3 NFT Canvas Cell Drawing
@@ -2134,43 +2140,58 @@ export default function App() {
 
                         {/* Interactive Swap Engine Split */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-                          <form onSubmit={handleSwapTokens} className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-900 space-y-3">
-                            <span className="text-[10px] font-mono text-zinc-500 uppercase block">SWAP TO EMOWALL COINS</span>
-                            
-                            <div className="space-y-1">
-                              <label className="text-[10px] text-zinc-400 font-mono">Pay with chain asset:</label>
-                              <select 
-                                value={swapFrom} 
-                                onChange={(e) => setSwapFrom(e.target.value)}
-                                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-1.5 text-xs text-zinc-200 focus:outline-none focus:border-amber-500"
+                          <motion.div
+                            className="relative"
+                            animate={{ scale: isSwapSuccess ? [1, 1.05, 1] : 1 }}
+                            transition={{ duration: 0.3 }}
+                          >
+                            <form onSubmit={handleSwapTokens} className="bg-zinc-900/40 p-4 rounded-xl border border-zinc-900 space-y-3">
+                              <span className="text-[10px] font-mono text-zinc-500 uppercase block">SWAP TO EMOWALL COINS</span>
+                              
+                              <div className="space-y-1">
+                                <label className="text-[10px] text-zinc-400 font-mono">Pay with chain asset:</label>
+                                <select 
+                                  value={swapFrom} 
+                                  onChange={(e) => setSwapFrom(e.target.value)}
+                                  className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-1.5 text-xs text-zinc-200 focus:outline-none focus:border-amber-500"
+                                >
+                                  <option value="SOL">Solana (SOL)</option>
+                                  <option value="ETH">Ethereum (ETH)</option>
+                                  <option value="MON">Monad (MON)</option>
+                                  <option value="ARB">Arbitrum (ARB)</option>
+                                  <option value="BTC">Bitcoin (BTC)</option>
+                                  <option value="BASE">Base (BASE)</option>
+                                </select>
+                              </div>
+
+                              <div className="space-y-1">
+                                <label className="text-[10px] text-zinc-400 font-mono">Amount to swap:</label>
+                                <input 
+                                  type="number" 
+                                  step="any"
+                                  value={swapAmount}
+                                  onChange={(e) => setSwapAmount(e.target.value)}
+                                  className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-1.5 text-xs text-zinc-200 focus:outline-none focus:border-amber-500 font-mono"
+                                />
+                              </div>
+
+                              <button 
+                                type="submit"
+                                className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold text-xs p-2 rounded-lg transition-all shadow shadow-orange-950/20 font-mono"
                               >
-                                <option value="SOL">Solana (SOL)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="MON">Monad (MON)</option>
-                                <option value="ARB">Arbitrum (ARB)</option>
-                                <option value="BTC">Bitcoin (BTC)</option>
-                                <option value="BASE">Base (BASE)</option>
-                              </select>
-                            </div>
-
-                            <div className="space-y-1">
-                              <label className="text-[10px] text-zinc-400 font-mono">Amount to swap:</label>
-                              <input 
-                                type="number" 
-                                step="any"
-                                value={swapAmount}
-                                onChange={(e) => setSwapAmount(e.target.value)}
-                                className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-1.5 text-xs text-zinc-200 focus:outline-none focus:border-amber-500 font-mono"
-                              />
-                            </div>
-
-                            <button 
-                              type="submit"
-                              className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-black font-bold text-xs p-2 rounded-lg transition-all shadow shadow-orange-950/20 font-mono"
-                            >
-                              EXECUTE GASLESS SWAP
-                            </button>
-                          </form>
+                                EXECUTE GASLESS SWAP
+                              </button>
+                            </form>
+                            {isSwapSuccess && (
+                                <motion.div
+                                  initial={{ opacity: 0, scale: 0.5 }}
+                                  animate={{ opacity: 1, scale: 1 }}
+                                  className="absolute inset-0 bg-emerald-950/80 flex items-center justify-center rounded-xl"
+                                >
+                                  <Check className="w-12 h-12 text-emerald-400" />
+                                </motion.div>
+                            )}
+                          </motion.div>
 
                           <div className="bg-zinc-900/20 p-4 rounded-xl border border-zinc-900 space-y-3">
                             <span className="text-[10px] font-mono text-zinc-500 uppercase block">Wallet Handshake Connection</span>
@@ -4021,7 +4042,11 @@ export default function App() {
               <div className="lg:col-span-5 space-y-6">
                 
                 {/* AI Project Assistant Side Section */}
-                <ProjectAssistant project={selectedProject} allProjects={PROJECTS_DATA} />
+                {selectedProject && <ProjectAssistant project={selectedProject} allProjects={PROJECTS_DATA} />}
+                
+                {/* Emo Key Chat Section */}
+                <EmoKeyChat />
+                <EmoKeyGenerator />
 
                 {/* Tech specifications card */}
                 <div className="bg-zinc-950 rounded-2xl border border-zinc-900 p-5 space-y-4 font-mono text-xs">
